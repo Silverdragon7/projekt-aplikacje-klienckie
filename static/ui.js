@@ -1,0 +1,1 @@
+//tu interfejs uzytkownika (czymkolwiek będzie)

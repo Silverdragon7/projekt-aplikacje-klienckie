@@ -1,0 +1,1 @@
+//tu tylko tworzy obiekty
