@@ -1,1 +1,26 @@
-/*tu style*/
+/*to powinno dodać font ale tego nie robi*/
+@font-face {
+    font-family: Pokemon;
+    src: url("./font/pokemonsolid.ttf");
+}
+
+h1 {
+    font-family: Pokemon;
+}
+p {
+    background-color: aquamarine;
+}
+
+#choose{
+    text-align: center;
+    position: absolute;
+    left: 30vw;
+    top: 30vh;
+    width: 40vw;
+    height: 40vh;
+    background: #ccc;
+    font-family: Pokemon;
+}
+select{
+    font-family: Pokemon;
+}

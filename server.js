@@ -4,10 +4,14 @@ const PORT = process.env.PORT || 3000; // bardzo istotna linijka - port zostaje 
 app.use(express.static('static'))
 app.use(express.json());
 
-//app.get("/", function (req, res) {
-//    res.send("<h1>my app on heroku!</h1>")
-//})
-
 app.listen(PORT, function () {
     console.log("start serwera na porcie " + PORT)
+})
+
+app.post("/checkSecondUser",function (req, res) {
+    dane = JSON.stringify({
+        secondUser: false
+    })
+    res.type("application/json");
+    res.send(dane)
 })
