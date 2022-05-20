@@ -1,3 +1,4 @@
+//tworzy obiekty danych klas, tego nie ruszamy
 let game;
 let net;
 let ui;

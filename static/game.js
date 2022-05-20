@@ -1,4 +1,4 @@
-//tu bedzie webgl
+//tylko to co ze strony dsa, nic tu nie ma do oglądania
 class Game {
 
     constructor() {
@@ -10,7 +10,7 @@ class Game {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById("root").append(this.renderer.domElement);
 
-        this.render() // wywołanie metody render
+        this.render() 
 
     }
 

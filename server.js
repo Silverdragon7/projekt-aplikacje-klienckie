@@ -7,21 +7,72 @@ app.use(express.json());
 app.listen(PORT, function () {
     console.log("start serwera na porcie " + PORT)
 })
-
+//tablica userów
 let users = []
+//avatary
+let avatar1 = null
+let avatar2
 
+//sprawdza czy nick jest wolny
 app.post("/checkNick", function (req, res) {
-    console.log(req.body)
     if (users[0] != req.body.name) {
         users.push(req.body.name)
         dane = JSON.stringify({
             nick: true
         })
-    }else{
+    } else {
         dane = JSON.stringify({
             nick: false
         })
     }
     res.type("application/json");
     res.send(dane)
+})
+
+//sprawdza ilość userów
+app.post("/checkUsers", function (req, res) {
+    console.log(users.length)
+    if (users.length > 2) {
+        dane = JSON.stringify({
+            users: false
+        })
+    } else if (users.length == 2) {
+        dane = JSON.stringify({
+            users: true,
+            avatar: avatar1
+        })
+    } else {
+        dane = JSON.stringify({
+            users: true,
+            avatar: null
+        })
+    }
+    res.type("application/json");
+    res.send(dane)
+})
+
+//przypisuje avatary
+app.post("/sendAvatar", function (req, res) {
+    console.log(users.length)
+    if (avatar1 == null) {
+        avatar1 = req.body.avatar
+        res.type("application/json");
+        res.send(JSON.stringify({ avatar1: req.body.avatar }))
+    } else {
+        console.log(avatar1, avatar2)
+        if (avatar1 != req.body.avatar) {
+            avatar2 = req.body.avatar
+            res.type("application/json");
+            res.send(JSON.stringify({
+                avatar1: avatar1,
+                avatar2: req.body.avatar
+            }))
+        }else{
+            res.type("application/json");
+            res.send(JSON.stringify({
+                zajete: true
+            }))
+        }
+    }
+
 })
