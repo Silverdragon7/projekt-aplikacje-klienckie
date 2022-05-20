@@ -3,12 +3,12 @@
     font-family: Pokemon;
     src: url("./font/pokemonsolid.ttf");
 }
-
-h1 {
+*{
     font-family: Pokemon;
 }
-p {
-    background-color: aquamarine;
+body {
+    margin: 0px;
+    overflow: hidden;
 }
 
 #choose{
@@ -19,8 +19,4 @@ p {
     width: 40vw;
     height: 40vh;
     background: #ccc;
-    font-family: Pokemon;
-}
-select{
-    font-family: Pokemon;
 }

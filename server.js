@@ -8,10 +8,20 @@ app.listen(PORT, function () {
     console.log("start serwera na porcie " + PORT)
 })
 
-app.post("/checkSecondUser",function (req, res) {
-    dane = JSON.stringify({
-        secondUser: false
-    })
+let users = []
+
+app.post("/checkNick", function (req, res) {
+    console.log(req.body)
+    if (users[0] != req.body.name) {
+        users.push(req.body.name)
+        dane = JSON.stringify({
+            nick: true
+        })
+    }else{
+        dane = JSON.stringify({
+            nick: false
+        })
+    }
     res.type("application/json");
     res.send(dane)
 })

@@ -3,18 +3,20 @@ class Net {
     constructor() {
 
     }
-    checkSecondUser = async () => {
+    checkNick = async (name) => {
         const data = JSON.stringify({
-            a: 1,
-            b: 2
+            name: name
         })
-
+        console.log(data)
         const options = {
             method: "POST",
             body: data,
+            headers: {
+                'Content-Type': 'application/json'
+            },
         };
 
-        let response = await fetch("/checkSecondUser", options)
+        let response = await fetch("/checkNick", options)
 
         if (!response.ok)
             return response.status
