@@ -20,3 +20,8 @@ body {
     height: 40vh;
     background: #ccc;
 }
+
+#status{
+    position: absolute;
+    left: 20px;
+}

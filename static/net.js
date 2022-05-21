@@ -65,4 +65,22 @@ class Net {
         else
             return await response.json() // response.json
     }
+    checkSecondUser = async () => {
+        const data = JSON.stringify({})
+        console.log(data)
+        const options = {
+            method: "POST",
+            body: data,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        let response = await fetch("/checkSecondUser", options)
+
+        if (!response.ok)
+            return response.status
+        else
+            return await response.json() // response.json
+    }
 }

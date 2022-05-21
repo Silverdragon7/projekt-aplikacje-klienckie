@@ -57,23 +57,43 @@ class Ui {
         button.onclick = async () => {
             this.avatar = document.getElementById("selectAvatar").value
             let dane = await net.sendAvatar(this.avatar)
-            console.log(dane)
             if (dane.zajete){
                 alert("Ten avatar jest już zajęty")
             }else if(dane.avatar2){
                 this.avatarPrzeciwnika = dane.avatar2
                 div.style.display = "none"
+                game.start()
                 //start gry
             }else{
                 div.style.display = "none"
-                this.wait()
+                game.start()
+                this.wait(0)            
             }
             
         }
         div.append(button)
     }
     //tu bedzie funkcja z timeoutem czekająca na tego drugiego
-    wait = () =>{
+    wait = async(x) =>{
+        let data = await net.checkSecondUser()
+        if (x == 0){
+            document.getElementById("status").innerHTML = "Waiting for other player"
+        }
+        if (x == 1){
+            document.getElementById("status").innerHTML = "Waiting for other player."
+        }
+        if (x == 2){
+            document.getElementById("status").innerHTML = "Waiting for other player.."
+        }
+        if (x == 3){
+            document.getElementById("status").innerHTML = "Waiting for other player..."
+            x = -1
+        }
+        if (data.second == false){
+            setTimeout(this.wait, 300, x+1)
+        }else{
+            document.getElementById("status").innerHTML = ""
+        }
         
     }
 }

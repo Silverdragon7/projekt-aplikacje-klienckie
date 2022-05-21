@@ -11,7 +11,7 @@ app.listen(PORT, function () {
 let users = []
 //avatary
 let avatar1 = null
-let avatar2
+let avatar2 = null
 
 //sprawdza czy nick jest wolny
 app.post("/checkNick", function (req, res) {
@@ -31,7 +31,6 @@ app.post("/checkNick", function (req, res) {
 
 //sprawdza ilość userów
 app.post("/checkUsers", function (req, res) {
-    console.log(users.length)
     if (users.length > 2) {
         dane = JSON.stringify({
             users: false
@@ -53,13 +52,11 @@ app.post("/checkUsers", function (req, res) {
 
 //przypisuje avatary
 app.post("/sendAvatar", function (req, res) {
-    console.log(users.length)
     if (avatar1 == null) {
         avatar1 = req.body.avatar
         res.type("application/json");
         res.send(JSON.stringify({ avatar1: req.body.avatar }))
     } else {
-        console.log(avatar1, avatar2)
         if (avatar1 != req.body.avatar) {
             avatar2 = req.body.avatar
             res.type("application/json");
@@ -74,5 +71,17 @@ app.post("/sendAvatar", function (req, res) {
             }))
         }
     }
-
+})
+app.post("/checkSecondUser", function (req, res) {
+    if (avatar2 != null) {
+        res.type("application/json");
+        res.send(JSON.stringify({ 
+            second: true,
+            avatar2: avatar2 }))
+    } else {
+            res.type("application/json");
+            res.send(JSON.stringify({
+                second: false
+            }))
+        }
 })
