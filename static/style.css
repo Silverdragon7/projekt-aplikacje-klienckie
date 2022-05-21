@@ -25,3 +25,32 @@ body {
     position: absolute;
     left: 20px;
 }
+
+h4{
+    margin: 0px;
+}
+
+.statystyka{
+    position: absolute; 
+    border-top: 10px solid #394f45;
+    border-bottom: 10px solid #394f45;
+    border-left: 3px solid #394f45;
+    border-right: 3px solid #394f45;
+    background: #ebe9e3;
+    padding: 10px;
+}
+
+#statystyka{
+    width: 30vw; 
+    height: 25vh;
+    top: 65vh;
+    left: 60vw;
+    transform: skew(-20deg);
+}
+#statystykaPrzeciwnika{
+    width: 25vw;
+    height: 15vh;
+    top: 15vh;
+    left: 10vw;
+    transform: skew(20deg);
+}

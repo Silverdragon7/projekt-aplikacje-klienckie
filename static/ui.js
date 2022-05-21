@@ -2,6 +2,13 @@ class Ui {
     constructor() {
         this.setName()
         this.lista = ["opcja1", "opcja2", "opcja3", "opcja4", "opcja5"]
+        this.skills = [
+            {avatar: "opcja1", lvl:"1", hp:"100", options: []},
+            {avatar: "opcja2", lvl:"1", hp:"100", options: []},
+            {avatar: "opcja3", lvl:"1", hp:"100", options: []},
+            {avatar: "opcja4", lvl:"1", hp:"100", options: []},
+            {avatar: "opcja5", lvl:"1", hp:"100", options: []}
+        ]
     }
     //uzytkownik podaje nick, serwer sprawdza czy juz istnieje 
     setName = async() => {
@@ -56,6 +63,11 @@ class Ui {
         //po kliknięciu sprawdza czy avatar jest wolny i znika diva
         button.onclick = async () => {
             this.avatar = document.getElementById("selectAvatar").value
+            for (let a of this.skills){
+                if (a.avatar == this.avatar){
+                    this.skills1 = a
+                }
+            }
             let dane = await net.sendAvatar(this.avatar)
             if (dane.zajete){
                 alert("Ten avatar jest już zajęty")
@@ -64,6 +76,7 @@ class Ui {
                 div.style.display = "none"
                 game.start()
                 //start gry
+                this.start()
             }else{
                 div.style.display = "none"
                 game.start()
@@ -93,7 +106,20 @@ class Ui {
             setTimeout(this.wait, 300, x+1)
         }else{
             document.getElementById("status").innerHTML = ""
-        }
-        
+            this.start()
+        }       
+    }
+    start = () => {
+        let statystyka  = document.createElement("div")
+        statystyka.id = "statystyka"
+        statystyka.classList.add("statystyka")
+        let name = document.createElement("h4")
+        name.innerHTML = this.skills1.avatar
+        statystyka.append(name)
+        document.body.append(statystyka)
+        let statystykaPrzeciwnika  = document.createElement("div")
+        statystykaPrzeciwnika.id = "statystykaPrzeciwnika"
+        statystykaPrzeciwnika.classList.add("statystyka")
+        document.body.append(statystykaPrzeciwnika)
     }
 }
