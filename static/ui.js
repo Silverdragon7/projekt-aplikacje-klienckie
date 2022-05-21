@@ -1,7 +1,9 @@
 class Ui {
     constructor() {
         this.setName()
+        //nazwy avatarów
         this.lista = ["opcja1", "opcja2", "opcja3", "opcja4", "opcja5"]
+        //wszystkie dziwne opcje jakie będą miały
         this.skills = [
             {avatar: "opcja1", lvl:"1", hp:"100", options: []},
             {avatar: "opcja2", lvl:"1", hp:"100", options: []},
@@ -63,22 +65,30 @@ class Ui {
         //po kliknięciu sprawdza czy avatar jest wolny i znika diva
         button.onclick = async () => {
             this.avatar = document.getElementById("selectAvatar").value
+            //przypisuje twoje skille
             for (let a of this.skills){
                 if (a.avatar == this.avatar){
                     this.skills1 = a
                 }
             }
+            //wysyła na serwer i sprawdza czy jest wolny
             let dane = await net.sendAvatar(this.avatar)
             if (dane.zajete){
                 alert("Ten avatar jest już zajęty")
-            }else if(dane.avatar2){
-                this.avatarPrzeciwnika = dane.avatar2
+            }else if(dane.avatar1){
+                this.avatarPrzeciwnika = dane.avatar1
+                for (let a of this.skills){
+                    if (a.avatar == this.avatarPrzeciwnika){
+                        this.skills2 = a
+                    }
+                }
                 div.style.display = "none"
-                game.start()
                 //start gry
+                game.start()
                 this.start()
             }else{
                 div.style.display = "none"
+                //start czekania na drugiego gracza
                 game.start()
                 this.wait(0)            
             }
@@ -86,7 +96,7 @@ class Ui {
         }
         div.append(button)
     }
-    //tu bedzie funkcja z timeoutem czekająca na tego drugiego
+    //funkcja z timeoutem czekająca na tego drugiego
     wait = async(x) =>{
         let data = await net.checkSecondUser()
         if (x == 0){
@@ -105,21 +115,41 @@ class Ui {
         if (data.second == false){
             setTimeout(this.wait, 300, x+1)
         }else{
+            //jeśli drugi już jest, przypisuje sobie jego skille
+            this.avatarPrzeciwnika = data.avatar2
+            for (let a of this.skills){
+                if (a.avatar == this.avatarPrzeciwnika){
+                    this.skills2 = a
+                }
+            }
             document.getElementById("status").innerHTML = ""
+            //start gry
             this.start()
         }       
     }
     start = () => {
+        //tworzy pola ze statystykami swoimi i przeciwnika
         let statystyka  = document.createElement("div")
         statystyka.id = "statystyka"
         statystyka.classList.add("statystyka")
+        //wpisanie danych początkowych uzytkownika
         let name = document.createElement("h4")
         name.innerHTML = this.skills1.avatar
         statystyka.append(name)
+        let lvl_hp = document.createElement("p")
+        lvl_hp.innerHTML = "<pre>Lvl: " + this.skills1.lvl + "                     " + "Hp: " + this.skills1.hp +"/100</pre>"
+        statystyka.append(lvl_hp)
         document.body.append(statystyka)
+        //wpisanie danych przeciwnika
         let statystykaPrzeciwnika  = document.createElement("div")
         statystykaPrzeciwnika.id = "statystykaPrzeciwnika"
         statystykaPrzeciwnika.classList.add("statystyka")
+        let lvl_hpPrzeciwnika = document.createElement("p")
+        let namePrzeciwnika = document.createElement("h4")
+        namePrzeciwnika.innerHTML = this.skills2.avatar
+        statystykaPrzeciwnika.append(namePrzeciwnika)
+        lvl_hpPrzeciwnika.innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp +"/100</pre>"
+        statystykaPrzeciwnika.append(lvl_hpPrzeciwnika)
         document.body.append(statystykaPrzeciwnika)
     }
 }

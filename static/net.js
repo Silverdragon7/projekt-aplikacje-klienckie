@@ -8,7 +8,6 @@ class Net {
         const data = JSON.stringify({
             name: name
         })
-        console.log(data)
         const options = {
             method: "POST",
             body: data,
@@ -28,7 +27,6 @@ class Net {
     checkUsers = async () => {
         const data = JSON.stringify({
         })
-        console.log(data)
         const options = {
             method: "POST",
             body: data,
@@ -49,7 +47,6 @@ class Net {
         const data = JSON.stringify({
             avatar: avatar
         })
-        console.log(data)
         const options = {
             method: "POST",
             body: data,
@@ -67,7 +64,6 @@ class Net {
     }
     checkSecondUser = async () => {
         const data = JSON.stringify({})
-        console.log(data)
         const options = {
             method: "POST",
             body: data,
