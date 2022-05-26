@@ -77,7 +77,7 @@ app.post("/checkSecondUser", function (req, res) {
         res.type("application/json");
         res.send(JSON.stringify({ 
             second: true,
-            avatar1: avatar1 }))
+            avatar2: avatar2 }))
     } else {
             res.type("application/json");
             res.send(JSON.stringify({
