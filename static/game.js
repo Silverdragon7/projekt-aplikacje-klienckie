@@ -66,7 +66,7 @@ class Game {
     }
     //model tails
     tails = (x, y, z) => {
-        this.loader.load('models/KNUCKLES.js', function (geometry) {
+        this.loader.load('models/TAILS.js', function (geometry) {
             game.tailsModel = new THREE.Mesh(geometry, game.tailsMaterial)
             game.tailsModel.name = "Tails";
             //skalowanie

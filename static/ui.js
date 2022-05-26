@@ -151,7 +151,19 @@ class Ui {
         lvl_hpPrzeciwnika.innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
         statystykaPrzeciwnika.append(lvl_hpPrzeciwnika)
         document.body.append(statystykaPrzeciwnika)
+        this.buttony()
         //generowanie modeli i platform
         game.start()
+    }
+    buttony = () => {
+        let bt1 = document.createElement("button")
+        let bt2 = document.createElement("button")
+        let bt3 = document.createElement("button")
+        let bt4 = document.createElement("button")
+        bt1.innerHTML = "bt"
+        bt2.innerHTML = "bt"
+        bt3.innerHTML = "bt"
+        bt4.innerHTML = "bt"
+        document.getElementById("statystyka").append(bt1, bt2, bt3, bt4)
     }
 }

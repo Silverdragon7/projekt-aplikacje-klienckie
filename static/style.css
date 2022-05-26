@@ -54,3 +54,7 @@ h4{
     left: 10vw;
     transform: skew(20deg);
 }
+
+button{
+    margin: 3px;
+}
