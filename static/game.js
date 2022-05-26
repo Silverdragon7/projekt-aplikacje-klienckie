@@ -27,27 +27,42 @@ class Game {
             });
         this.beanMaterial = new THREE.MeshBasicMaterial(
             {
-                map: new THREE.TextureLoader().load("mats/BEAN.png"), 
-                morphTargets: true 
+                map: new THREE.TextureLoader().load("mats/BEAN.png"),
+                morphTargets: true
             });
         this.amyMaterial = new THREE.MeshBasicMaterial(
             {
-                map: new THREE.TextureLoader().load("mats/AMY.png"), 
+                map: new THREE.TextureLoader().load("mats/AMY.png"),
                 morphTargets: true
             });
         this.knucklesMaterial = new THREE.MeshBasicMaterial(
             {
-                map: new THREE.TextureLoader().load("mats/KNUCKLES.png"), 
-                morphTargets: true 
+                map: new THREE.TextureLoader().load("mats/KNUCKLES.png"),
+                morphTargets: true
             });
         this.tailsMaterial = new THREE.MeshBasicMaterial(
             {
-                map: new THREE.TextureLoader().load("mats/TAILS.png"), 
-                morphTargets: true 
+                map: new THREE.TextureLoader().load("mats/TAILS.png"),
+                morphTargets: true
             });
         //do ładowania modeli
         this.loader = new THREE.JSONLoader();
+        //do raycastera
+        this.raycaster = new THREE.Raycaster();
+        this.mouseVector = new THREE.Vector2()
+        //onclick
+        document.getElementById("root").onclick = (e) => this.click(e)
         this.render()
+    }
+    click = (event) => {
+        this.mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        this.raycaster.setFromCamera(this.mouseVector, this.camera);
+        this.intersects = this.raycaster.intersectObjects(this.scene.children);
+        //jeśli kliknięty obiekt nie jest platformą
+        if (this.intersects.length > 0 && this.intersects[0].object.name != "") {
+            console.log(this.intersects[0].object);
+        }
     }
     //model tails
     tails = (x, y, z) => {
@@ -151,38 +166,38 @@ class Game {
         this.platforma2.position.z += 10
         this.scene.add(this.platforma2)
         //dodanie postaci gracza
-        if (ui.skills1.avatar == "Sonic"){
+        if (ui.skills1.avatar == "Sonic") {
             game.sonic(-20, -180, -10)
-        }else if (ui.skills1.avatar == "Amy"){
+        } else if (ui.skills1.avatar == "Amy") {
             game.amy(-20, -180, -10)
-        }else if (ui.skills1.avatar == "Bean"){
+        } else if (ui.skills1.avatar == "Bean") {
             game.bean(-20, -180, -10)
-        }else if (ui.skills1.avatar == "Knuckles"){
+        } else if (ui.skills1.avatar == "Knuckles") {
             game.knuckles(-20, -180, -10)
-        }else if (ui.skills1.avatar == "Tails"){
+        } else if (ui.skills1.avatar == "Tails") {
             game.tails(-20, -180, -10)
         }
         //dodanie przeciwnika
-        if (ui.skills2.avatar == "Sonic"){
+        if (ui.skills2.avatar == "Sonic") {
             game.sonic(20, 0, 10)
-        }else if (ui.skills2.avatar == "Amy"){
+        } else if (ui.skills2.avatar == "Amy") {
             game.amy(20, 0, 10)
-        }else if (ui.skills2.avatar == "Bean"){
+        } else if (ui.skills2.avatar == "Bean") {
             game.bean(20, 0, 10)
-        }else if (ui.skills2.avatar == "Knuckles"){
+        } else if (ui.skills2.avatar == "Knuckles") {
             game.knuckles(20, 0, 10)
-        }else if (ui.skills2.avatar == "Tails"){
+        } else if (ui.skills2.avatar == "Tails") {
             game.tails(20, 0, 10)
         }
     }
 
-    render = (x,z) => {
+    render = (x, z) => {
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
         console.log("render leci")
     }
 
-    resize = (x,z) => {
+    resize = (x, z) => {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
