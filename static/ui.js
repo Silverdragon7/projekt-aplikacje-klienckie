@@ -5,11 +5,11 @@ class Ui {
         this.lista = ["Amy", "Bean", "Knuckles", "Sonic", "Tails"]
         //wszystkie dziwne opcje jakie będą miały
         this.skills = [
-            { avatar: "Amy", lvl: "1", hp: "100", options: [] },
-            { avatar: "Bean", lvl: "1", hp: "100", options: [] },
-            { avatar: "Knuckles", lvl: "1", hp: "100", options: [] },
-            { avatar: "Sonic", lvl: "1", hp: "100", options: [] },
-            { avatar: "Tails", lvl: "1", hp: "100", options: [] }
+            { avatar: "Amy", lvl: "1", hp: "100", options: ["Jog", "Spin", "Fly", "Item"] },
+            { avatar: "Bean", lvl: "1", hp: "100", options: ["Jog", "Spin", "Ability", "akcja4"] },
+            { avatar: "Knuckles", lvl: "1", hp: "100", options: ["Jog", "GluideClimb", "GrabItems", "RunAway"] },
+            { avatar: "Sonic", lvl: "1", hp: "100", options: ["Jog", "Spin", "akcja3", "akcja4"] },
+            { avatar: "Tails", lvl: "1", hp: "100", options: ["Jog", "Spin", "akcja3", "akcja4"] }
         ]
     }
     //uzytkownik podaje nick, serwer sprawdza czy juz istnieje 
@@ -160,10 +160,11 @@ class Ui {
         let bt2 = document.createElement("button")
         let bt3 = document.createElement("button")
         let bt4 = document.createElement("button")
-        bt1.innerHTML = "bt"
-        bt2.innerHTML = "bt"
-        bt3.innerHTML = "bt"
-        bt4.innerHTML = "bt"
+        bt1.innerHTML = this.skills1.options[0]
+        bt2.innerHTML = this.skills1.options[1]
+        bt3.innerHTML = this.skills1.options[2]
+        bt4.innerHTML = this.skills1.options[3]
         document.getElementById("statystyka").append(bt1, bt2, bt3, bt4)
+        //onclick??
     }
 }

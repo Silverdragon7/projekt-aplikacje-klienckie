@@ -30,9 +30,9 @@ class Game {
                 map: new THREE.TextureLoader().load("mats/BEAN.png"),
                 morphTargets: true
             });
-        this.amyMaterial = new THREE.MeshBasicMaterial(
+        this.creamMaterial = new THREE.MeshBasicMaterial(
             {
-                map: new THREE.TextureLoader().load("mats/AMY.png"),
+                map: new THREE.TextureLoader().load("mats/CREAM.png"),
                 morphTargets: true
             });
         this.knucklesMaterial = new THREE.MeshBasicMaterial(
@@ -50,8 +50,9 @@ class Game {
         //do raycastera
         this.raycaster = new THREE.Raycaster();
         this.mouseVector = new THREE.Vector2()
-        //onclick
+        //onclick -> do usunięcia
         document.getElementById("root").onclick = (e) => this.click(e)
+        this.clock = new THREE.Clock();
         this.render()
     }
     click = (event) => {
@@ -79,25 +80,31 @@ class Game {
             game.tailsModel.rotation.y += y
             //dodanie
             game.scene.add(game.tailsModel);
+            //console.log(geometry.animations)
             // tutaj animacje
         })
     }
-    //model amy
-    amy = (x, y, z) => {
-        this.loader.load('models/AMY.js', function (geometry) {
-            game.amyModel = new THREE.Mesh(geometry, game.amyMaterial)
-            game.amyModel.name = "Amy";
+    //model cream
+    cream = (x, y, z) => {
+        this.loader.load('models/CREAM.js', function (geometry) {
+            game.creamModel = new THREE.Mesh(geometry, game.creamMaterial)
+            game.creamModel.name = "Cream";
             //skalowanie
-            game.amyModel.scale.x = 0.3
-            game.amyModel.scale.y = 0.3
-            game.amyModel.scale.z = 0.3
+            game.creamModel.scale.x = 0.3
+            game.creamModel.scale.y = 0.3
+            game.creamModel.scale.z = 0.3
             //pozycja
-            game.amyModel.position.x += x
-            game.amyModel.position.z += z
-            game.amyModel.rotation.y += y
+            game.creamModel.position.x += x
+            game.creamModel.position.z += z
+            game.creamModel.rotation.y += y
             //dodanie
-            game.scene.add(game.amyModel);
+            game.scene.add(game.creamModel);
             // tutaj animacje
+            console.log(geometry.animations)
+
+            game.creamMixer = new THREE.AnimationMixer(game.creamModel)
+            //game.amyMixer.clipAction("Fly").play()
+            //game.amyMixer.clipAction("Item").play()
         })
     }
     //model knuckles
@@ -116,6 +123,10 @@ class Game {
             //dodanie
             game.scene.add(game.knucklesModel);
             // tutaj animacje
+            game.knucklesMixer = new THREE.AnimationMixer(game.knucklesModel)
+            //game.knucklesMixer.clipAction("GluideClimb").play()
+            //game.knucklesMixer.clipAction("GrabItems").play()
+            //game.knucklesMixer.clipAction("Jog").play()
         })
     }
     //model bean
@@ -134,6 +145,10 @@ class Game {
             //dodanie
             game.scene.add(game.beanModel);
             // tutaj animacje
+            //console.log(geometry.animations)
+            //game.beanMixer = new THREE.AnimationMixer(game.beanModel)
+            //game.beanMixer.clipAction("Ability").play()
+            //Grab00001e
         })
     }
     //model sonic
@@ -152,6 +167,21 @@ class Game {
             //dodanie
             game.scene.add(game.sonicModel);
             // tutaj animacje
+            console.log(geometry.animations)
+            //nie działa
+            game.sonicMixer = new THREE.AnimationMixer(game.sonicModel)
+            ///
+            //game.sonicMixer.clipAction("Spin").play()
+            //game.sonicMixer.clipAction("Spring").play()
+            ///
+            //game.sonicMixer.clipAction("Super").play()
+            //???
+            //game.sonicMixer.clipAction("AirHurtDie").play()
+            //game.sonicMixer.clipAction("Balance000e").play()
+            //game.sonicMixer.clipAction("Fall00001e").play()
+            //mixer.clipAction("Grab00001e").play()
+            //game.sonicMixer.clipAction("SuperTrans").play()
+
         });
     }
     //generowanie platform i postaci. Start gry
@@ -194,6 +224,12 @@ class Game {
     render = (x, z) => {
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
+        let delta = this.clock.getDelta();
+        if (this.sonicMixer) this.sonicMixer.update(delta)
+        if (this.beanMixer) this.beanMixer.update(delta)
+        if (this.knucklesMixer) this.knucklesMixer.update(delta)
+        if (this.amyMixer) this.amyMixer.update(delta)
+        if (this.tailsMixer) this.tailsMixer.update(delta)
         console.log("render leci")
     }
 
