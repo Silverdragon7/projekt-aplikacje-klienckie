@@ -83,8 +83,7 @@ class Ui {
                     }
                 }
                 div.style.display = "none"
-                //start gry
-                game.start()
+                //start
                 this.start()
             } else {
                 div.style.display = "none"
@@ -152,6 +151,7 @@ class Ui {
         lvl_hpPrzeciwnika.innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
         statystykaPrzeciwnika.append(lvl_hpPrzeciwnika)
         document.body.append(statystykaPrzeciwnika)
+        //generowanie modeli i platform
         game.start()
     }
 }

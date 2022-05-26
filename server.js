@@ -72,6 +72,7 @@ app.post("/sendAvatar", function (req, res) {
         }
     }
 })
+//sprawdza czy jest już drugi user
 app.post("/checkSecondUser", function (req, res) {
     if (avatar2 != null) {
         res.type("application/json");
