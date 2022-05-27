@@ -1,0 +1,12 @@
+ui 
+- lekkie sprzątanko w funkcji start (poukładanie funkcje i podział na 2 różne elementy)
+
+game
+- obrót modeli w stylu face to face (linijki 212-220)
+
+dodanie pliku image.jpg (można spróbować zrobić z tego tło canvasa)
+
+style
+- zmiana w  statystykach (stopnie w transformie) ale to można zmienić wg estetyki
+- ostylowanie zmian w oknach statystyk
+
