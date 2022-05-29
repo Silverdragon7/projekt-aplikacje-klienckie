@@ -136,21 +136,33 @@ class Ui {
         let name = document.createElement("h4")
         name.innerHTML = this.skills1.avatar
         statystyka.append(name)
-        let lvl_hp = document.createElement("p")
-        lvl_hp.innerHTML = "<pre>Lvl: " + this.skills1.lvl + "                     " + "Hp: " + this.skills1.hp + "/100</pre>"
+
+        let lvl_hp = document.createElement("div")
+        let lvl = document.createElement("p")
+        let hp = document.createElement("p")
+        lvl.innerHTML = "Lvl: " + this.skills1.lvl
+        hp.innerHTML = "Hp: " + this.skills1.hp + "/100"
+        lvl.id = "lvl"
+        hp.id = "hp"
+        lvl_hp.appendChild(lvl)
+        lvl_hp.appendChild(hp)
+
         statystyka.append(lvl_hp)
         document.body.append(statystyka)
+
         //wpisanie danych przeciwnika
         let statystykaPrzeciwnika = document.createElement("div")
         statystykaPrzeciwnika.id = "statystykaPrzeciwnika"
         statystykaPrzeciwnika.classList.add("statystyka")
-        let lvl_hpPrzeciwnika = document.createElement("p")
         let namePrzeciwnika = document.createElement("h4")
         namePrzeciwnika.innerHTML = this.skills2.avatar
         statystykaPrzeciwnika.append(namePrzeciwnika)
+
+        let lvl_hpPrzeciwnika = document.createElement("p")
         lvl_hpPrzeciwnika.innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
         statystykaPrzeciwnika.append(lvl_hpPrzeciwnika)
         document.body.append(statystykaPrzeciwnika)
+
         this.buttony()
         //generowanie modeli i platform
         game.start()

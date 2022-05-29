@@ -9,6 +9,7 @@
 body {
     margin: 0px;
     overflow: hidden;
+    background: url("./image.jpg");
 }
 
 #choose{
@@ -45,7 +46,9 @@ h4{
     height: 25vh;
     top: 65vh;
     left: 60vw;
-    transform: skew(-20deg);
+    transform: skew(-10deg);
+    display: inline-block;
+    padding-top: 0;
 }
 #statystykaPrzeciwnika{
     width: 25vw;
@@ -57,4 +60,27 @@ h4{
 
 button{
     margin: 3px;
+}
+
+#statystyka * {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 20%;
+    overflow: hidden;
+}
+#statystyka div  * {
+    display: inline-block;
+    text-align: center;    
+    height: 80%
+}
+#statystyka button {
+    width: 40%;
+    float: left;
+}
+
+#lvl{
+    float: left;
+}
+#hp{
+    margin-left: 10%;
 }

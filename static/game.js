@@ -209,15 +209,15 @@ class Game {
         }
         //dodanie przeciwnika
         if (ui.skills2.avatar == "Sonic") {
-            game.sonic(20, 0, 10)
+            game.sonic(20, 169, 10)
         } else if (ui.skills2.avatar == "Amy") {
-            game.amy(20, 0, 10)
+            game.amy(20, 169, 10)
         } else if (ui.skills2.avatar == "Bean") {
-            game.bean(20, 0, 10)
+            game.bean(20, 169, 10)
         } else if (ui.skills2.avatar == "Knuckles") {
-            game.knuckles(20, 0, 10)
+            game.knuckles(20, 169, 10)
         } else if (ui.skills2.avatar == "Tails") {
-            game.tails(20, 0, 10)
+            game.tails(20, 169, 10)
         }
     }
 
