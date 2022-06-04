@@ -80,8 +80,16 @@ class Game {
             game.tailsModel.rotation.y += y
             //dodanie
             game.scene.add(game.tailsModel);
+            game.tailsMixer = new THREE.AnimationMixer(game.tailsModel)
             //console.log(geometry.animations)
             // tutaj animacje
+            if (ui.avatar == "Tails"){
+                game.user = game.tailsModel
+                game.mixer = game.tailsMixer
+            }else if (ui.avatarPrzeciwnika == "Tails"){
+                game.user2 = game.tailsModel
+                game.mixer2 = game.tailsMixer
+            }
         })
     }
     //model amy
@@ -105,6 +113,13 @@ class Game {
             game.creamMixer = new THREE.AnimationMixer(game.creamModel)
             //game.amyMixer.clipAction("Fly").play()
             //game.amyMixer.clipAction("Item").play()
+            if (ui.avatar == "Amy"){
+                game.user = game.creamModel
+                game.mixer = game.creamMixer
+            }else if (ui.avatarPrzeciwnika == "Amy"){
+                game.user2 = game.creamModel
+                game.mixer2 = game.creamMixer
+            }
         })
     }
     //model knuckles
@@ -124,6 +139,13 @@ class Game {
             game.scene.add(game.knucklesModel);
             // tutaj animacje
             game.knucklesMixer = new THREE.AnimationMixer(game.knucklesModel)
+            if (ui.avatar == "Knuckles"){
+                game.user = game.knucklesModel
+                game.mixer = game.knucklesMixer
+            }else if (ui.avatarPrzeciwnika == "Knuckles"){
+                game.user2 = game.knucklesModel
+                game.mixer2 = game.knucklesMixer
+            }
             //game.knucklesMixer.clipAction("GluideClimb").play()
             //game.knucklesMixer.clipAction("GrabItems").play()
             //game.knucklesMixer.clipAction("Jog").play()
@@ -144,6 +166,13 @@ class Game {
             game.beanModel.rotation.y += y
             //dodanie
             game.scene.add(game.beanModel);
+            if (ui.avatar == "Bean"){
+                game.user = game.beanModel
+                game.mixer = game.beanMixer
+            }else if (ui.avatarPrzeciwnika == "Bean"){
+                game.user2 = game.beanModel
+                game.mixer2 = game.beanMixer
+            }
             // tutaj animacje
             //console.log(geometry.animations)
             //game.beanMixer = new THREE.AnimationMixer(game.beanModel)
@@ -171,6 +200,13 @@ class Game {
             //nie działa
             game.sonicMixer = new THREE.AnimationMixer(game.sonicModel)
             ///
+            if (ui.avatar == "Sonic"){
+                game.user = game.sonicModel
+                game.mixer = game.sonicMixer
+            }else if (ui.avatarPrzeciwnika == "Sonic"){
+                game.user2 = game.sonicModel
+                game.mixer2 = game.sonicMixer
+            }
             //game.sonicMixer.clipAction("Spin").play()
             //game.sonicMixer.clipAction("Spring").play()
             ///
@@ -230,6 +266,8 @@ class Game {
         if (this.knucklesMixer) this.knucklesMixer.update(delta)
         if (this.amyMixer) this.amyMixer.update(delta)
         if (this.tailsMixer) this.tailsMixer.update(delta)
+        if (this.mixer) this.mixer.update(delta)
+        if (this.mixer2) this.mixer2.update(delta)
         console.log("render leci")
     }
 

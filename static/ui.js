@@ -11,6 +11,7 @@ class Ui {
             { avatar: "Sonic", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
             { avatar: "Tails", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] }
         ]
+        this.strata = 0
     }
     //uzytkownik podaje nick, serwer sprawdza czy juz istnieje 
     setName = async () => {
@@ -211,7 +212,11 @@ class Ui {
             
         }
         bt2.onclick = () => {
-
+            ui.strata += Math.floor(Math.random() * 20)
+            console.log(ui.strata)
+            //?? zrob animacje
+            game.mixer.clipAction("Spin").play()
+            //setTimeout(() => {game.mixer.stopAllAction}, 1000)
         }
         bt3.onclick = () => {
             this.skills1.hp += 10
