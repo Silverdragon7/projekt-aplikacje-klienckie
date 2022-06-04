@@ -87,8 +87,16 @@ app.post("/checkSecondUser", function (req, res) {
         }
 })
 let lastMove = 0
+let move = ""
 app.post("/checkTurn", function (req, res) {
         res.type("application/json");
         res.send(JSON.stringify({ 
-            lastMove: lastMove }))
+            lastMove: lastMove,
+            move: move}))
+})
+app.post("/sendMove", function (req, res) {
+        lastMove = req.body.user
+        move = req.body.move
+        res.type("application/json");
+        res.send(JSON.stringify({}))
 })

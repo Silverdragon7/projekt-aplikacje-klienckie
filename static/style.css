@@ -91,4 +91,6 @@ button{
     height: 100vh;
     position: absolute;
     text-align: center;
+    background-color: #394f4561;
+    z-index: 1;
 }

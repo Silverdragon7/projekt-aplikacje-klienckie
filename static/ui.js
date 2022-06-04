@@ -5,11 +5,11 @@ class Ui {
         this.lista = ["Amy", "Bean", "Knuckles", "Sonic", "Tails"]
         //wszystkie dziwne opcje jakie będą miały
         this.skills = [
-            { avatar: "Amy", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Bean", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Knuckles", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Sonic", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Tails", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] }
+            { avatar: "Amy", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Bean", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Knuckles", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Sonic", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Tails", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] }
         ]
     }
     //uzytkownik podaje nick, serwer sprawdza czy juz istnieje 
@@ -129,8 +129,12 @@ class Ui {
             //start gry
             this.you = 1
             this.start()
+            this.yourTurn()
             
         }
+    }
+    yourTurn = () => {
+
     }
     start = () => {
         //tworzy pola ze statystykami swoimi i przeciwnika
@@ -164,6 +168,7 @@ class Ui {
         statystykaPrzeciwnika.append(namePrzeciwnika)
 
         let lvl_hpPrzeciwnika = document.createElement("p")
+        lvl_hpPrzeciwnika.id = "przeciwnik"
         lvl_hpPrzeciwnika.innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
         statystykaPrzeciwnika.append(lvl_hpPrzeciwnika)
         document.body.append(statystykaPrzeciwnika)
@@ -181,6 +186,13 @@ class Ui {
             setTimeout(this.opponentsTurn, 500)
         }else{
             document.getElementById("opponentsTurn").style.display = "none"
+            if(turn.move == "skip"){
+                alert(this.avatarPrzeciwnika + " skipped their move")
+            }else if (turn.move == "hp"){
+                this.skills2.hp += 10
+                console.log(hp)
+                document.getElementById("przeciwnik").innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
+            }
         }
 
     }
@@ -195,5 +207,23 @@ class Ui {
         bt4.innerHTML = this.skills1.options[3]
         document.getElementById("statystyka").append(bt1, bt2, bt3, bt4)
         //onclick??
+        bt1.onclick = () => {
+            
+        }
+        bt2.onclick = () => {
+
+        }
+        bt3.onclick = () => {
+            this.skills1.hp += 10
+            //this.start()
+            net.sendMove("hp")
+            hp.innerHTML = "Hp: " + this.skills1.hp + "/100"
+            this.opponentsTurn()
+        }
+        bt4.onclick = () => {
+            alert(this.avatar + " skipped their move")
+            net.sendMove("skip")
+            this.opponentsTurn()
+        }
     }
 }
