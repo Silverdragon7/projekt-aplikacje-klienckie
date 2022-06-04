@@ -5,11 +5,11 @@ class Ui {
         this.lista = ["Amy", "Bean", "Knuckles", "Sonic", "Tails"]
         //wszystkie dziwne opcje jakie będą miały
         this.skills = [
-            { avatar: "Amy", lvl: "1", hp: "100", options: ["Jog", "Spin", "Fly", "Item"] },
-            { avatar: "Bean", lvl: "1", hp: "100", options: ["Jog", "Spin", "Ability", "akcja4"] },
-            { avatar: "Knuckles", lvl: "1", hp: "100", options: ["Jog", "GluideClimb", "GrabItems", "RunAway"] },
-            { avatar: "Sonic", lvl: "1", hp: "100", options: ["Jog", "Spin", "akcja3", "akcja4"] },
-            { avatar: "Tails", lvl: "1", hp: "100", options: ["Jog", "Spin", "akcja3", "akcja4"] }
+            { avatar: "Amy", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Bean", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Knuckles", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Sonic", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] },
+            { avatar: "Tails", lvl: "1", hp: "100", options: ["Attack", "Spin", "Heal", "Skip"] }
         ]
     }
     //uzytkownik podaje nick, serwer sprawdza czy juz istnieje 
