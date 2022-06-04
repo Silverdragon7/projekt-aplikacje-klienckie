@@ -12,6 +12,10 @@ class Ui {
             { avatar: "Tails", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] }
         ]
         this.strata = 0
+        this.strata2 = 0
+        this.atak = 0
+        this.atak2 = 0
+        this.end = false
     }
     //uzytkownik podaje nick, serwer sprawdza czy juz istnieje 
     setName = async () => {
@@ -130,12 +134,7 @@ class Ui {
             //start gry
             this.you = 1
             this.start()
-            this.yourTurn()
-            
         }
-    }
-    yourTurn = () => {
-
     }
     start = () => {
         //tworzy pola ze statystykami swoimi i przeciwnika
@@ -180,20 +179,37 @@ class Ui {
 
     }
     opponentsTurn = async () => {
-        let turn = await net.checkTurn()
-        console.log(turn)
-        document.getElementById("opponentsTurn").style.display = "block"
-        if (turn.lastMove == this.you || turn.lastMove == 0) {
-            setTimeout(this.opponentsTurn, 500)
-        }else{
-            document.getElementById("opponentsTurn").style.display = "none"
-            if(turn.move == "skip"){
-                alert(this.avatarPrzeciwnika + " skipped their move")
-            }else if (turn.move == "hp"){
-                this.skills2.hp += 10
-                console.log(hp)
-                document.getElementById("przeciwnik").innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
+        if (this.end == false) {
+            let turn = await net.checkTurn()
+            console.log(turn)
+            document.getElementById("opponentsTurn").style.display = "block"
+            if (turn.lastMove == this.you || turn.lastMove == 0) {
+                setTimeout(this.opponentsTurn, 500)
+            } else {
+                document.getElementById("opponentsTurn").style.display = "none"
+                if (turn.move == "skip") {
+                    alert(this.avatarPrzeciwnika + " skipped their move")
+                    this.strata2 = 0
+                } else if (turn.move == "hp") {
+                    alert(this.avatarPrzeciwnika + " healed")
+                    this.skills2.hp += 10
+                    this.strata2 = 0
+                    document.getElementById("przeciwnik").innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
+                } else if (turn.move == "spin") {
+                    alert(this.avatarPrzeciwnika + " spinned")
+                    this.strata2 = turn.strata
+                    game.mixer.clipAction("Spin").play()
+                } else if (turn.move == "atak") {
+                    alert(this.avatarPrzeciwnika + " attacked")
+                    ui.atak2 = turn.atak - ui.strata2
+                    this.skills1.hp -= ui.atak2
+                    hp.innerHTML = "Hp: " + this.skills1.hp + "/100"
+                }
+                this.checkWin()
             }
+        }else{
+            document.getElementById("opponentsTurn").style.display = "block"
+            document.getElementById("opponentsTurn").innerHTML = "Koniec gry"
         }
 
     }
@@ -209,26 +225,55 @@ class Ui {
         document.getElementById("statystyka").append(bt1, bt2, bt3, bt4)
         //onclick??
         bt1.onclick = () => {
-            
+            ui.strata = 0
+            ui.atak = Math.floor(Math.random() * 20) + 10 - ui.strata2
+            this.skills2.hp -= ui.atak
+            //console.log(this.s)
+            document.getElementById("przeciwnik").innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
+            net.sendMove("atak")
+            this.checkWin()
+            this.opponentsTurn()
         }
         bt2.onclick = () => {
+            ui.atak = 0
+            ui.atak2 = 0
             ui.strata += Math.floor(Math.random() * 20)
-            console.log(ui.strata)
+            net.sendMove("spin")
             //?? zrob animacje
             game.mixer.clipAction("Spin").play()
             //setTimeout(() => {game.mixer.stopAllAction}, 1000)
+            this.checkWin()
+            this.opponentsTurn()
         }
         bt3.onclick = () => {
+            ui.atak = 0
+            ui.atak2 = 0
+            ui.strata = 0
             this.skills1.hp += 10
             //this.start()
             net.sendMove("hp")
             hp.innerHTML = "Hp: " + this.skills1.hp + "/100"
+            this.checkWin()
             this.opponentsTurn()
         }
         bt4.onclick = () => {
-            alert(this.avatar + " skipped their move")
+            ui.atak = 0
+            ui.atak2 = 0
+            ui.strata = 0
             net.sendMove("skip")
+            this.checkWin()
             this.opponentsTurn()
+        }
+    }
+    checkWin = () => {
+        if (this.skills1.hp <= 0) {
+            alert("You loose")
+            this.end = true
+            document.getElementById("opponentsTurn").style.display = "block"
+            document.getElementById("opponentsTurn").innerHTML = "Koniec gry"
+        } else if (this.skills2.hp <= 0) {
+            alert("You win")
+            this.end = true
         }
     }
 }

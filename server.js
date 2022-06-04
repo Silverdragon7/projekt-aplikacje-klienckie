@@ -88,15 +88,23 @@ app.post("/checkSecondUser", function (req, res) {
 })
 let lastMove = 0
 let move = ""
+let strata = 0
+let atak = 0
 app.post("/checkTurn", function (req, res) {
+        //data = JSON.parse(req.body)
         res.type("application/json");
         res.send(JSON.stringify({ 
             lastMove: lastMove,
-            move: move}))
+            move: move,
+            strata: strata,
+            atak: atak
+        }))
 })
 app.post("/sendMove", function (req, res) {
         lastMove = req.body.user
         move = req.body.move
+        strata = req.body.strata
+        atak = req.body.atak
         res.type("application/json");
         res.send(JSON.stringify({}))
 })

@@ -99,8 +99,11 @@ class Net {
     sendMove = async (move) => {
         const data = JSON.stringify({
             move: move,
-            user: ui.you
+            user: ui.you,
+            strata: ui.strata,
+            atak: ui.atak
         })
+        console.log(data)
         const options = {
             method: "POST",
             body: data,
