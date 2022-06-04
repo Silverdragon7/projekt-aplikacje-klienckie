@@ -79,4 +79,21 @@ class Net {
         else
             return await response.json() // response.json
     }
+    checkTurn = async () => {
+        const data = JSON.stringify({})
+        const options = {
+            method: "POST",
+            body: data,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        let response = await fetch("/checkTurn", options)
+
+        if (!response.ok)
+            return response.status
+        else
+            return await response.json() // response.json
+    }
 }

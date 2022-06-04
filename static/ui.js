@@ -85,6 +85,9 @@ class Ui {
                 div.style.display = "none"
                 //start
                 this.start()
+                this.you = 2
+                this.opponentsTurn()
+
             } else {
                 div.style.display = "none"
                 //start czekania na drugiego gracza
@@ -124,7 +127,9 @@ class Ui {
             }
             document.getElementById("status").innerHTML = ""
             //start gry
+            this.you = 1
             this.start()
+            
         }
     }
     start = () => {
@@ -166,6 +171,18 @@ class Ui {
         this.buttony()
         //generowanie modeli i platform
         game.start()
+
+    }
+    opponentsTurn = async () => {
+        let turn = await net.checkTurn()
+        console.log(turn)
+        document.getElementById("opponentsTurn").style.display = "block"
+        if (turn.lastMove == this.you || turn.lastMove == 0) {
+            setTimeout(this.opponentsTurn, 500)
+        }else{
+            document.getElementById("opponentsTurn").style.display = "none"
+        }
+
     }
     buttony = () => {
         let bt1 = document.createElement("button")

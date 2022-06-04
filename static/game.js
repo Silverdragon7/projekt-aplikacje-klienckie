@@ -84,8 +84,8 @@ class Game {
             // tutaj animacje
         })
     }
-    //model cream
-    cream = (x, y, z) => {
+    //model amy
+    amy = (x, y, z) => {
         this.loader.load('models/CREAM.js', function (geometry) {
             game.creamModel = new THREE.Mesh(geometry, game.creamMaterial)
             game.creamModel.name = "Cream";
