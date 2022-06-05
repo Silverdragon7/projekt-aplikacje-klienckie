@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const PORT = process.env.PORT || 3000; // bardzo istotna linijka - port zostaje przydzielony przez Heroku
+const Datastore = require('nedb')
 app.use(express.static('static'))
 app.use(express.json());
 
@@ -64,7 +65,7 @@ app.post("/sendAvatar", function (req, res) {
                 avatar1: avatar1,
                 avatar2: req.body.avatar
             }))
-        }else{
+        } else {
             res.type("application/json");
             res.send(JSON.stringify({
                 zajete: true
@@ -76,35 +77,57 @@ app.post("/sendAvatar", function (req, res) {
 app.post("/checkSecondUser", function (req, res) {
     if (avatar2 != null) {
         res.type("application/json");
-        res.send(JSON.stringify({ 
+        res.send(JSON.stringify({
             second: true,
-            avatar2: avatar2 }))
+            avatar2: avatar2
+        }))
     } else {
-            res.type("application/json");
-            res.send(JSON.stringify({
-                second: false
-            }))
-        }
+        res.type("application/json");
+        res.send(JSON.stringify({
+            second: false
+        }))
+    }
 })
 let lastMove = 0
 let move = ""
 let strata = 0
 let atak = 0
 app.post("/checkTurn", function (req, res) {
-        //data = JSON.parse(req.body)
-        res.type("application/json");
-        res.send(JSON.stringify({ 
-            lastMove: lastMove,
-            move: move,
-            strata: strata,
-            atak: atak
-        }))
+    //data = JSON.parse(req.body)
+    res.type("application/json");
+    res.send(JSON.stringify({
+        lastMove: lastMove,
+        move: move,
+        strata: strata,
+        atak: atak
+    }))
 })
 app.post("/sendMove", function (req, res) {
-        lastMove = req.body.user
-        move = req.body.move
-        strata = req.body.strata
-        atak = req.body.atak
-        res.type("application/json");
-        res.send(JSON.stringify({}))
+    lastMove = req.body.user
+    move = req.body.move
+    strata = req.body.strata
+    atak = req.body.atak
+    res.type("application/json");
+    res.send(JSON.stringify({}))
+})
+
+app.get("/getList", async function (req, res) {
+    ress = function () {
+        console.log(skills)
+        res.type("application/json")
+        res.send(JSON.stringify(skills))
+    }
+    let skills = []
+    const database = new Datastore({
+        filename: './static/data.db',
+        autoload: true
+    })
+    database.find({}, function (err, cols) {
+        for (col of cols) {
+            console.log(col)
+            skills.push(col)
+        }
+        ress()
+    })
+
 })
