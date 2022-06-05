@@ -205,7 +205,18 @@ class Ui {
                 } else if (turn.move == "spin") {
                     alert(this.avatarPrzeciwnika + " spinned")
                     this.strata2 = turn.strata
-                    game.mixer.clipAction("Spin").play()
+
+                    let temporary = game.user2
+                    game.mixer2.clipAction("Spin").play()
+                    setTimeout(() => {
+                        // game.mixer.stopAllAction()
+                        game.scene.remove(game.user2)
+                        game.mixer2.uncacheRoot(game.user2)
+                        game.mixer2.remove
+                        game.user2 = null
+                        game.scene.add(temporary)
+                        game.user2 = temporary
+                    }, 1000)
                 } else if (turn.move == "atak") {
                     alert(this.avatarPrzeciwnika + " attacked")
                     ui.atak2 = turn.atak - ui.strata2
@@ -252,14 +263,23 @@ class Ui {
             this.checkWin()
             this.opponentsTurn()
         }
-        bt2.onclick = () => {
+        bt2.onclick = async () => {
             ui.atak = 0
             ui.atak2 = 0
             ui.strata += Math.floor(Math.random() * 20)
+            let temporary = game.user
             net.sendMove("spin")
             //?? zrob animacje
             game.mixer.clipAction("Spin").play()
-            //setTimeout(() => {game.mixer.stopAllAction}, 1000)
+            setTimeout(() => {
+                // game.mixer.stopAllAction()
+                game.scene.remove(game.user)
+                game.mixer.uncacheRoot(game.user)
+                game.mixer.remove
+                game.user = null
+                game.scene.add(temporary)
+                game.user = temporary
+            }, 1000)
             this.checkWin()
             this.opponentsTurn()
         }

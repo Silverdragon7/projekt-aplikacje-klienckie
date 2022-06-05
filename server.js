@@ -113,7 +113,7 @@ app.post("/sendMove", function (req, res) {
 
 app.get("/getList", async function (req, res) {
     ress = function () {
-        console.log(skills)
+        // console.log(skills)
         res.type("application/json")
         res.send(JSON.stringify(skills))
     }
@@ -124,7 +124,7 @@ app.get("/getList", async function (req, res) {
     })
     database.find({}, function (err, cols) {
         for (col of cols) {
-            console.log(col)
+            // console.log(col)
             skills.push(col)
         }
         ress()
