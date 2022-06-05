@@ -4,18 +4,25 @@ class Ui {
         //nazwy avatarów
         this.lista = ["Amy", "Bean", "Knuckles", "Sonic", "Tails"]
         //wszystkie dziwne opcje jakie będą miały
-        this.skills = [
-            { avatar: "Amy", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Bean", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Knuckles", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Sonic", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
-            { avatar: "Tails", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] }
-        ]
+        this.skills = []
+        this.noname()
+        //[
+        // { avatar: "Amy", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+        // { avatar: "Bean", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+        // { avatar: "Knuckles", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+        // { avatar: "Sonic", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] },
+        // { avatar: "Tails", lvl: "1", hp: 100, options: ["Attack", "Spin", "Heal", "Skip"] }
+        //]
+        console.log(this.skills)
         this.strata = 0
         this.strata2 = 0
         this.atak = 0
         this.atak2 = 0
         this.end = false
+    }
+    noname = async () => {
+        this.skills = await net.getAvatars()
+        console.log(this.skills)
     }
     //uzytkownik podaje nick, serwer sprawdza czy juz istnieje 
     setName = async () => {
@@ -207,13 +214,18 @@ class Ui {
                 }
                 this.checkWin()
             }
-        }else{
+        } else {
             document.getElementById("opponentsTurn").style.display = "block"
             document.getElementById("opponentsTurn").innerHTML = "Koniec gry"
         }
 
     }
     buttony = () => {
+        let div1 = document.createElement("div")
+        let div2 = document.createElement("div")
+        div1.classList.add("buttonHolder")
+        div2.classList.add("buttonHolder")
+
         let bt1 = document.createElement("button")
         let bt2 = document.createElement("button")
         let bt3 = document.createElement("button")
@@ -222,8 +234,14 @@ class Ui {
         bt2.innerHTML = this.skills1.options[1]
         bt3.innerHTML = this.skills1.options[2]
         bt4.innerHTML = this.skills1.options[3]
-        document.getElementById("statystyka").append(bt1, bt2, bt3, bt4)
+
+        div1.appendChild(bt1)
+        div1.appendChild(bt2)
+        div2.appendChild(bt3)
+        div2.appendChild(bt4)
+        document.getElementById("statystyka").append(div1, div2)
         //onclick??
+
         bt1.onclick = () => {
             ui.strata = 0
             ui.atak = Math.floor(Math.random() * 20) + 10 - ui.strata2

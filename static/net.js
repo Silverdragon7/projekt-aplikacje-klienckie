@@ -119,4 +119,11 @@ class Net {
         else
             return await response.json() // response.json
     }
+
+    getAvatars = async () => {
+        let list = await fetch("/getList", {
+            method: "GET",
+        })
+        return list.json()
+    }
 }
