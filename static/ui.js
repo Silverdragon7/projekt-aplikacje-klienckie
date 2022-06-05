@@ -253,35 +253,65 @@ class Ui {
         document.getElementById("statystyka").append(div1, div2)
         //onclick??
 
-        bt1.onclick = () => {
-            ui.strata = 0
-            ui.atak = Math.floor(Math.random() * 20) + 10 - ui.strata2
-            this.skills2.hp -= ui.atak
-            //console.log(this.s)
-            document.getElementById("przeciwnik").innerHTML = "<pre>Lvl: " + this.skills2.lvl + "                     " + "Hp: " + this.skills2.hp + "/100</pre>"
-            net.sendMove("atak")
-            this.checkWin()
-            this.opponentsTurn()
+        bt1.onclick = async () => {
+            let clicked
+            function checkFlag() {
+                if (game.user2 != clicked) {
+                    window.setTimeout(checkFlag, 100)
+                    console.log('check')
+                    console.log(clicked)
+                    console.log(game.user2)
+                    clicked = game.lastClicked
+                }
+                else {
+                    game.lastClicked = null
+                    ui.strata = 0
+                    ui.atak = Math.floor(Math.random() * 20) + 10 - ui.strata2
+                    ui.skills2.hp -= ui.atak
+                    //console.log(this.s)
+                    document.getElementById("przeciwnik").innerHTML = "<pre>Lvl: " + ui.skills2.lvl + "                     " + "Hp: " + ui.skills2.hp + "/100</pre>"
+                    net.sendMove("atak")
+                    ui.checkWin()
+                    ui.opponentsTurn()
+                }
+
+            }
+            checkFlag()
         }
         bt2.onclick = async () => {
-            ui.atak = 0
-            ui.atak2 = 0
-            ui.strata += Math.floor(Math.random() * 20)
-            let temporary = game.user
-            net.sendMove("spin")
-            //?? zrob animacje
-            game.mixer.clipAction("Spin").play()
-            setTimeout(() => {
-                // game.mixer.stopAllAction()
-                game.scene.remove(game.user)
-                game.mixer.uncacheRoot(game.user)
-                game.mixer.remove
-                game.user = null
-                game.scene.add(temporary)
-                game.user = temporary
-            }, 1000)
-            this.checkWin()
-            this.opponentsTurn()
+            let clicked
+            function checkFlag() {
+                if (game.user2 != clicked) {
+                    window.setTimeout(checkFlag, 100)
+                    console.log('check')
+                    console.log(clicked)
+                    console.log(game.user2)
+                    clicked = game.lastClicked
+                }
+                else {
+                    console.log(game.user)
+                    ui.atak = 0
+                    ui.atak2 = 0
+                    ui.strata += Math.floor(Math.random() * 20)
+                    let temporary = game.user
+                    net.sendMove("spin")
+                    //?? zrob animacje
+                    game.mixer.clipAction("Spin").play()
+                    setTimeout(() => {
+                        // game.mixer.stopAllAction()
+                        game.scene.remove(game.user)
+                        game.mixer.uncacheRoot(game.user)
+                        game.mixer.remove
+                        game.user = null
+                        game.scene.add(temporary)
+                        game.user = temporary
+                    }, 1000)
+                    game.lastClicked = null
+                    ui.checkWin()
+                    ui.opponentsTurn()
+                }
+            }
+            checkFlag()
         }
         bt3.onclick = () => {
             ui.atak = 0
