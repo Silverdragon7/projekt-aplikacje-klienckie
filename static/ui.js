@@ -205,7 +205,6 @@ class Ui {
                 } else if (turn.move == "spin") {
                     alert(this.avatarPrzeciwnika + " spinned")
                     this.strata2 = turn.strata
-
                     let temporary = game.user2
                     game.mixer2.clipAction("Spin").play()
                     setTimeout(() => {
@@ -222,6 +221,17 @@ class Ui {
                     ui.atak2 = turn.atak - ui.strata2
                     this.skills1.hp -= ui.atak2
                     hp.innerHTML = "Hp: " + this.skills1.hp + "/100"
+                    let temporary = game.user2
+                    game.mixer2.clipAction("Jog").play()
+                    setTimeout(() => {
+                        // game.mixer.stopAllAction()
+                        game.scene.remove(game.user2)
+                        game.mixer2.uncacheRoot(game.user2)
+                        game.mixer2.remove
+                        game.user2 = null
+                        game.scene.add(temporary)
+                        game.user2 = temporary
+                    }, 1000)
                 }
                 this.checkWin()
             }
@@ -270,7 +280,19 @@ class Ui {
                     ui.skills2.hp -= ui.atak
                     //console.log(this.s)
                     document.getElementById("przeciwnik").innerHTML = "<pre>Lvl: " + ui.skills2.lvl + "                     " + "Hp: " + ui.skills2.hp + "/100</pre>"
+                    let temporary = game.user
                     net.sendMove("atak")
+                    game.mixer.clipAction("Jog").play()
+                    setTimeout(() => {
+                        // game.mixer.stopAllAction()
+                        game.scene.remove(game.user)
+                        game.mixer.uncacheRoot(game.user)
+                        game.mixer.remove
+                        game.user = null
+                        game.scene.add(temporary)
+                        game.user = temporary
+                    }, 1000)
+                    game.lastClicked = null
                     ui.checkWin()
                     ui.opponentsTurn()
                 }
