@@ -221,17 +221,75 @@ class Ui {
                     ui.atak2 = turn.atak - ui.strata2
                     this.skills1.hp -= ui.atak2
                     hp.innerHTML = "Hp: " + this.skills1.hp + "/100"
+
+                    ////////////////////////////////
                     let temporary = game.user2
+                    net.sendMove("atak")
                     game.mixer2.clipAction("Jog").play()
-                    setTimeout(() => {
-                        // game.mixer.stopAllAction()
-                        game.scene.remove(game.user2)
-                        game.mixer2.uncacheRoot(game.user2)
-                        game.mixer2.remove
-                        game.user2 = null
-                        game.scene.add(temporary)
-                        game.user2 = temporary
-                    }, 1000)
+                    console.log("position", game.user.position)
+                    console.log("position2", game.user2.position)
+
+                    /// tu biegnie 
+                    let i = 0
+                    let j = 0
+                    function unmove() {
+                        if (j < 34) {
+                            j += 1
+                            game.user2.position.x += 1
+                            if (j % 2 == 0) {
+                                game.user2.position.z += 1
+
+                            }
+                            window.setTimeout(unmove, 50)
+                        } else {
+                            game.scene.remove(game.user2)
+                            game.mixer2.uncacheRoot(game.user2)
+                            game.mixer2.remove
+                            game.user2 = null
+                            game.scene.add(temporary)
+                            game.user2 = temporary
+                            game.lastClicked = null
+                            game.user2.rotation.y -= Math.PI
+                        }
+
+                    }
+                    function move() {
+                        /// tu określa jak dalego ma biec - co drugi krok  jest w bok żeby skorygować kierunek
+                        if (i < 34) {
+                            i += 1
+
+                            /// podbieganie - zmiana pozycji                            
+                            game.user2.position.x -= 1
+                            if (i % 2 == 0) {
+                                game.user2.position.z -= 1
+                            }
+                            window.setTimeout(move, 50)
+                        } else {
+                            game.scene.remove(game.user2)
+                            game.mixer2.uncacheRoot(game.user2)
+                            game.mixer2.remove
+                            game.user2 = null
+                            game.scene.add(temporary)
+                            game.user2 = temporary
+
+                            game.lastClicked = null
+
+                            /// tu sprzedaje mu lepę
+                            console.log("mat", game.user.material.color.r)
+                            game.user.material.color.r = 254
+                            console.log("mat2", game.user.material.color.r)
+                            window.setTimeout(() => {
+                                game.user.material.color.r = 1
+                            }, 1000)
+                            game.user2.rotation.y += Math.PI
+                            game.mixer2.clipAction("Jog").play()
+                            unmove()
+                        }
+                    }
+
+                    move()
+
+                    ////////////////////////////////
                 }
                 this.checkWin()
             }
