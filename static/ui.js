@@ -283,16 +283,69 @@ class Ui {
                     let temporary = game.user
                     net.sendMove("atak")
                     game.mixer.clipAction("Jog").play()
-                    setTimeout(() => {
-                        // game.mixer.stopAllAction()
-                        game.scene.remove(game.user)
-                        game.mixer.uncacheRoot(game.user)
-                        game.mixer.remove
-                        game.user = null
-                        game.scene.add(temporary)
-                        game.user = temporary
-                    }, 1000)
-                    game.lastClicked = null
+                    console.log("position", game.user.position)
+                    console.log("position2", game.user2.position)
+
+                    /// tu biegnie 
+                    let i = 0
+                    let j = 0
+                    function unmove() {
+                        if (j < 34) {
+                            j += 1
+                            game.user.position.x -= 1
+                            if (j % 2 == 0) {
+                                game.user.position.z -= 1
+
+                            }
+                            window.setTimeout(unmove, 50)
+                        } else {
+                            game.scene.remove(game.user)
+                            game.mixer.uncacheRoot(game.user)
+                            game.mixer.remove
+                            game.user = null
+                            game.scene.add(temporary)
+                            game.user = temporary
+                            game.lastClicked = null
+                            game.user.rotation.y -= Math.PI
+                        }
+
+                    }
+                    function move() {
+                        /// tu określa jak dalego ma biec - co drugi krok  jest w bok żeby skorygować kierunek
+                        if (i < 34) {
+                            i += 1
+
+                            /// podbieganie - zmiana pozycji                            
+                            game.user.position.x += 1
+                            if (i % 2 == 0) {
+                                game.user.position.z += 1
+                            }
+                            window.setTimeout(move, 50)
+                        } else {
+                            game.scene.remove(game.user)
+                            game.mixer.uncacheRoot(game.user)
+                            game.mixer.remove
+                            game.user = null
+                            game.scene.add(temporary)
+                            game.user = temporary
+
+                            game.lastClicked = null
+
+                            /// tu sprzedaje mu lepę
+                            console.log("mat", game.user.material.color.r)
+                            game.user2.material.color.r = 254
+                            console.log("mat2", game.user.material.color.r)
+                            window.setTimeout(() => {
+                                game.user2.material.color.r = 1
+                            }, 1000)
+                            game.user.rotation.y += Math.PI
+                            game.mixer.clipAction("Jog").play()
+                            unmove()
+                        }
+                    }
+
+                    move()
+
                     ui.checkWin()
                     ui.opponentsTurn()
                 }
