@@ -224,7 +224,7 @@ class Ui {
 
                     ////////////////////////////////
                     let temporary = game.user2
-                    net.sendMove("atak")
+                    //net.sendMove("atak")
                     game.mixer2.clipAction("Jog").play()
                     console.log("position", game.user.position)
                     console.log("position2", game.user2.position)
